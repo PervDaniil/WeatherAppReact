@@ -1,5 +1,9 @@
-import { Table, TableCell, TableBody, TableRow, Stack } from "@mui/material"
-import { Thermostat as ThermostatIcon } from '@mui/icons-material';
+import { Table, TableCell, TableBody, TableRow, Stack, SvgIcon, Typography } from "@mui/material"
+import WeatherStateIcon from '../utils/weatherIcons';
+import { IoThermometer, IoTime } from 'react-icons/io5';
+import { WiHumidity } from 'react-icons/wi';
+import { LuWind } from 'react-icons/lu';
+
 
 export default function ForecastTable({ data }) {
     return (
@@ -9,8 +13,12 @@ export default function ForecastTable({ data }) {
                     <TableCell>Temperature</TableCell>
                     <TableCell>
                         <Stack direction="row" justifyContent="flex-end">
-                            {data && data[0].main.temp}&deg;
-                           <ThermostatIcon />
+                            <Typography variant="body2" component="div" mr={1.5}>
+                                {data && Math.round(data[0].main.temp)}C&deg;
+                            </Typography>
+                            <SvgIcon>
+                                <IoThermometer />
+                            </SvgIcon>
                         </Stack>
                     </TableCell>
                 </TableRow>
@@ -18,8 +26,12 @@ export default function ForecastTable({ data }) {
                     <TableCell>Humidity</TableCell>
                     <TableCell>
                         <Stack direction="row" justifyContent="flex-end">
-                             {data && data[0].main.humidity}%
-                           <ThermostatIcon />
+                            <Typography variant="body2" component="div" mr={1.5}>
+                                {data && data[0].main.humidity}%
+                            </Typography>
+                            <SvgIcon>
+                                <WiHumidity />
+                            </SvgIcon>
                         </Stack>
                     </TableCell>
                 </TableRow>
@@ -27,8 +39,12 @@ export default function ForecastTable({ data }) {
                     <TableCell>State</TableCell>
                     <TableCell>
                         <Stack direction="row" justifyContent="flex-end">
+                            <Typography variant="body2" component="div" mr={1.5}>
                                 {data && data[0].weather[0].main}
-                           <ThermostatIcon />
+                            </Typography>
+                            <SvgIcon>
+                                <WeatherStateIcon weatherState={data && data[0].weather[0].main} />
+                            </SvgIcon>
                         </Stack>
                     </TableCell>
                 </TableRow>
@@ -36,8 +52,12 @@ export default function ForecastTable({ data }) {
                     <TableCell>Time</TableCell>
                     <TableCell>
                         <Stack direction="row" justifyContent="flex-end">
-                            {data && data[0].dt_txt.slice(11, 16)}PM
-                           <ThermostatIcon />
+                            <Typography variant="body2" component="div" mr={1.5}>
+                                {data && data[0].dt_txt.slice(11, 16)}PM
+                            </Typography>
+                            <SvgIcon>
+                                <IoTime />
+                            </SvgIcon>
                         </Stack>
                     </TableCell>
                 </TableRow>
@@ -45,8 +65,12 @@ export default function ForecastTable({ data }) {
                     <TableCell>Wind</TableCell>
                     <TableCell>
                         <Stack direction="row" justifyContent="flex-end">
+                            <Typography variant="body2" component="div" mr={1.5}>
                                 {data && data[0].wind.speed}km/h
-                           <ThermostatIcon />
+                            </Typography>
+                            <SvgIcon>
+                                <LuWind />
+                            </SvgIcon>
                         </Stack>
                     </TableCell>
                 </TableRow>

@@ -1,37 +1,36 @@
 import { ArrowBack as ArrowBackIcon, ArrowForward as ArrowForwardIcon } from '@mui/icons-material';
 import { Cloud as CloudIcon } from '@mui/icons-material';
-import { Box, Card, IconButton } from '@mui/material';
+import { Box, Card, IconButton, SvgIcon, Typography } from '@mui/material';
+import WeatherStateIcon from '../utils/weatherIcons';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
+import styles from '../styles/HomeStyles';
 import 'swiper/css';
 
 
-export default function CardsSlider({ cards }) {
+export default function CardsSlider({ data }) {
     return (
-        <Box sx={{ display: 'flex', height: '100%', background: 'rgba(0, 0, 0, 0.1)', alignItems: 'center' }}>
-            <IconButton className='backArrowButton' color='primary' sx={{ ml: 1}}>
+        <Box sx={styles.ForecastCardsSwiperContainer}>
+            <IconButton className='backArrowButton' color='primary' sx={{ ml: 1 }}>
                 <ArrowBackIcon />
             </IconButton>
             <Swiper slidesPerView="3" style={{ maxWidth: '460px' }} modules={[Navigation]}
                 navigation={{ prevEl: '.backArrowButton', nextEl: '.nextArrowButton' }}>
-                {Array.from(new Array(5)).map(card => (
-                    <SwiperSlide>
-                        <Card sx={{
-                            p: 2,
-                            ml: 1.5,
-                            width: '120px',
-                            height: '140px',
-                            display: 'grid',
-                            borderRadius: '16px',
-                            boxSizing: 'border-box',
-                            border: '1px solid rgba(0, 0, 0, 0.25)',
-                        }}>
-                            <CloudIcon />
-                        </Card>
-                    </SwiperSlide>
-                ))}
+                <>
+                    {data && data.map((day, index) => (
+                        <SwiperSlide>
+                            <Card sx={styles.ForecastCard} key={index}>
+                                <SvgIcon>
+                                    <WeatherStateIcon weatherState={day.weather[0].main} />
+                                </SvgIcon>
+                                <Typography variant="h6" component="div" align="center">{Math.round(day.main.temp)}&deg;</Typography>
+                                <Typography variant="body2" component="div" align="center" color="textSecondary">{day.dt_txt.slice(11, 16)}PM</Typography>
+                            </Card>
+                        </SwiperSlide>
+                    ))}
+                </>
             </Swiper>
-            <IconButton className='nextArrowButton' color='primary' sx={{ mr: 1}}>
+            <IconButton className='nextArrowButton' color='primary' sx={{ mr: 1 }}>
                 <ArrowForwardIcon />
             </IconButton>
         </Box>

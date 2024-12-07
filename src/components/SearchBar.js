@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search as SearchIcon } from "@mui/icons-material";
+import { AltRoute, Search as SearchIcon } from "@mui/icons-material";
 import { Autocomplete, TextField, InputAdornment, Tooltip, IconButton } from "@mui/material";
 
 
@@ -40,6 +40,11 @@ export default function SearchBar({ setCityState }) {
                                     </IconButton>
                                 </Tooltip>
                             </InputAdornment>
+                    }}
+                    onKeyDown={(keyPressed) => {
+                        if (keyPressed.code === 'Enter') {
+                            HandleCityInput();
+                        }
                     }}
                     sx={{
                         px: 2, pt: 2.5, '& .MuiOutlinedInput-root': { borderRadius: '42px', px: 2}
