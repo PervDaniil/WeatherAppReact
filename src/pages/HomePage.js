@@ -9,22 +9,44 @@ import ThemeModeFab from "../components/ThemeModeFab";
 import PreloaderBar from "../components/PreloaderBar";
 import CardsSlider from "../components/CardsSlider";
 import SearchBar from "../components/SearchBar";
+import SnackBar from '../components/SnackBar';
 import Chart from "../components/Chart";
 
 
 export default function HomePage() {
+    const [requestFailed, setRequestFailed] = useState(false);
     const [forecastData, setForecastData] = useState(null);
+    const [city, setCity] = useState('');
+
 
     useEffect(() => {
+        if (forecastData) {
+            console.log(forecastData)
+        }
+    }, [forecastData]);
 
-    }, []);
+
+    useEffect(() => {
+        if (city) {
+            HandleForecastFetching();
+        }
+    }, [city]);
+
 
     const HandleForecastFetching = () => {
         const FetchForecast = async () => {
-            const data = await getWeatherForecast();
-
-            if (data) {
-                setForecastData(data);
+            if (city) {
+                try {
+                    const data = await getWeatherForecast(city);
+                    setForecastData(data.list);
+                    console.log(data.list);
+        
+                } catch (error) {
+                    setRequestFailed(true);
+                    console.log(error);
+                }
+            } else {
+                setRequestFailed(true);
             }
         };
 
@@ -39,23 +61,25 @@ export default function HomePage() {
             <ResponsiveGridLayout>
                 <Box className="grid-first-section" sx={styles.GridFirstSection}>
                     <Stack direction="row" bgcolor="rgba(0, 0, 0, 0.15)" justifyContent="space-between">
-                        <Typography fontSize="7.5vw" component="div" fontWeight={500} ml={2.5}>26&deg;</Typography>
+                        <Typography fontSize="7.5vw" component="div" fontWeight={500} ml={2.5}>{forecastData && forecastData[0].main.temp}&deg;</Typography>
                         <Box mr={7.5}>
-                            <SvgIcon sx={{ height: '100%', fontSize: 120}}>
+                            <SvgIcon sx={{ height: '100%', fontSize: 140}}>
                                 <CloudIcon />
                             </SvgIcon>
                         </Box>
                     </Stack>
-                    <ForecastTable />
+                    <ForecastTable data={forecastData}/>
                     <CardsSlider />
                 </Box>
                 <Box className="grid-second-section" sx={styles.GridSecondSection}>
-                    <SearchBar />
+                    <SearchBar setCityState={setCity}/>
                     <Chart />
                 </Box>
             </ResponsiveGridLayout>
 
             <ThemeModeFab />
+            {requestFailed && 
+                <SnackBar severity="error" text="Request failed" />}
         </ThemeContexProvider>
     );
 }

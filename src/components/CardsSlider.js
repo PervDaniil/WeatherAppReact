@@ -1,9 +1,9 @@
-import 'swiper/css';
-import { Navigation } from 'swiper/modules';
+import { ArrowBack as ArrowBackIcon, ArrowForward as ArrowForwardIcon } from '@mui/icons-material';
+import { Cloud as CloudIcon } from '@mui/icons-material';
 import { Box, Card, IconButton } from '@mui/material';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Cloud as CloudIcon } from '@mui/icons-material';
-import { ArrowBack as ArrowBackIcon, ArrowForward as ArrowForwardIcon } from '@mui/icons-material';
+import { Navigation } from 'swiper/modules';
+import 'swiper/css';
 
 
 export default function CardsSlider({ cards }) {

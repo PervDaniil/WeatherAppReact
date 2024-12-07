@@ -18,8 +18,8 @@ export async function getWeatherForecast(city) {
         const lat = cityData[0].lat;
         const lon = cityData[0].lon;
 
-        const response = await fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${APIKEY}`);
+        const response = await fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${APIKEY}&units=metric`);
         const data = await response.json();
-        console.table(data);
+        return data;
     }
 }

@@ -1,20 +1,43 @@
+import { useState } from "react";
 import { Search as SearchIcon } from "@mui/icons-material";
-import { Autocomplete, TextField, InputAdornment, Tooltip } from "@mui/material";
+import { Autocomplete, TextField, InputAdornment, Tooltip, IconButton } from "@mui/material";
 
 
-export default function SearchBar() {
+export default function SearchBar({ setCityState }) {
+    const autocompleteOptions = require('../utils/cities.json');
+    const [city, setInputCity] = useState('');
+
+
+    const HandleInputChange = (e) => {
+        const { value } = e.target;
+        setInputCity(value);
+    }
+
+    const HandleCityInput = () => {
+        setCityState(city);
+        setInputCity('');
+    }
+
     return (
         <Autocomplete
             freeSolo
-            options={['Ivanovka', 'Kant']}
+            value={city}
+            options={autocompleteOptions.cities}
+            filterOptions={((options, state) => {
+                return options.filter(option => 
+                    option.toLowerCase().includes(state.inputValue.toLowerCase())).slice(0, 7)
+            })}
             renderInput={(parameters => (
                 <TextField {...parameters}
+                    onChange={HandleInputChange}
                     fullWidth focused placeholder="City searching"
                     InputProps={{
                         ...parameters.InputProps, startAdornment:
                             <InputAdornment position="start">
                                 <Tooltip title="Search">
-                                    <SearchIcon />
+                                    <IconButton onClick={HandleCityInput}>
+                                        <SearchIcon />
+                                    </IconButton>
                                 </Tooltip>
                             </InputAdornment>
                     }}

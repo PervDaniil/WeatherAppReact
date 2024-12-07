@@ -9,7 +9,7 @@ export default function ForecastTable({ data }) {
                     <TableCell>Temperature</TableCell>
                     <TableCell>
                         <Stack direction="row" justifyContent="flex-end">
-                            25&deg;
+                            {data && data[0].main.temp}&deg;
                            <ThermostatIcon />
                         </Stack>
                     </TableCell>
@@ -18,7 +18,7 @@ export default function ForecastTable({ data }) {
                     <TableCell>Humidity</TableCell>
                     <TableCell>
                         <Stack direction="row" justifyContent="flex-end">
-                                12.4%
+                             {data && data[0].main.humidity}%
                            <ThermostatIcon />
                         </Stack>
                     </TableCell>
@@ -27,7 +27,7 @@ export default function ForecastTable({ data }) {
                     <TableCell>State</TableCell>
                     <TableCell>
                         <Stack direction="row" justifyContent="flex-end">
-                            Cloudy
+                                {data && data[0].weather[0].main}
                            <ThermostatIcon />
                         </Stack>
                     </TableCell>
@@ -36,7 +36,7 @@ export default function ForecastTable({ data }) {
                     <TableCell>Time</TableCell>
                     <TableCell>
                         <Stack direction="row" justifyContent="flex-end">
-                            9:00PM
+                            {data && data[0].dt_txt.slice(11, 16)}PM
                            <ThermostatIcon />
                         </Stack>
                     </TableCell>
@@ -45,7 +45,7 @@ export default function ForecastTable({ data }) {
                     <TableCell>Wind</TableCell>
                     <TableCell>
                         <Stack direction="row" justifyContent="flex-end">
-                            5.2km/h
+                                {data && data[0].wind.speed}km/h
                            <ThermostatIcon />
                         </Stack>
                     </TableCell>
