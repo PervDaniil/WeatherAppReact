@@ -1,6 +1,6 @@
 import { Table, TableCell, TableBody, TableRow, Stack, SvgIcon, Typography } from "@mui/material"
-import WeatherStateIcon from '../utils/weatherIcons';
 import { IoThermometer, IoTime } from 'react-icons/io5';
+import WeatherStateIcon from '../utils/weatherIcons';
 import { WiHumidity } from 'react-icons/wi';
 import { LuWind } from 'react-icons/lu';
 

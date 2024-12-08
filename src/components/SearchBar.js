@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AltRoute, Search as SearchIcon } from "@mui/icons-material";
+import { Search as SearchIcon } from "@mui/icons-material";
 import { Autocomplete, TextField, InputAdornment, Tooltip, IconButton } from "@mui/material";
 
 

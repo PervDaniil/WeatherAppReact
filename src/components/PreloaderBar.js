@@ -10,7 +10,7 @@ export default function PreloaderBar() {
         if (document.readyState === 'complete') {
             setTimeout(() => {
                 setLoading(false);
-            }, 800)
+            }, 100)
         }
     }, []);
 
