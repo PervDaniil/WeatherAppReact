@@ -1,22 +1,25 @@
-import { IoSunny, IoCloud, IoSnow, IoRainy } from 'react-icons/io5';
+import { IoSunny as SunnyIcon } from 'react-icons/io5';
+import { MdModeNight as ClearNightIcon } from 'react-icons/md';
+import { BsCloudSnowFill as SnowyIcon } from 'react-icons/bs';
+import { IoMdCloud as CloudyIcon, IoMdRainy as RainyIcon, IoMdCloudyNight as CloudyNightIcon } from 'react-icons/io';
 
 
 export default function WeatherStateIcon({ weatherState }) {
     switch (weatherState) {
         case 'Clouds': {
-            return <IoCloud />;
+            return <CloudyIcon />;
         }
         case 'Clear': {
-            return <IoSunny />;
+            return <SunnyIcon />;
         }
         case 'Rain': {
-            return <IoRainy />;
+            return <RainyIcon />;
         }
         case 'Snow': {
-            return <IoSnow />;
+            return <SnowyIcon />
         }
         default: {
-            return <IoCloud />
+            return <CloudyIcon />;
         }
     }
 }
