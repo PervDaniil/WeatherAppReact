@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 
-export default function AnimatedComponent({ children, direction, wasUpdated, durationTime = 1.5 }) {
+export default function AnimatedComponent({ children, direction, key, durationTime = 1.5 }) {
     let animationDirection;
 
     switch (direction) {
@@ -27,7 +27,7 @@ export default function AnimatedComponent({ children, direction, wasUpdated, dur
 
     return (
         <motion.div
-            key={wasUpdated}
+            key={key}
             initial={{ transform: animationDirection }}
             animate={{ transform: "translateX(0px)" }}
             transition={{ type: "spring", duration: durationTime }}>

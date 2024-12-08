@@ -1,42 +1,22 @@
-import { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
+import { useEffect, useState } from 'react';
+import { getCurrentWeek, getNightAndDayTemperatureValues, daysOfWeek } from '../utils/date';
 import { Chart as ChartJS, Tooltip, Legend, LineElement, Title, CategoryScale, LinearScale, PointElement } from 'chart.js';
 ChartJS.register(Tooltip, Legend, LineElement, Title, CategoryScale, LinearScale, PointElement);
 
 
 export default function Chart({ data }) {
-    const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
     const [chartTemperatureValues, setChartTemperatureValues] = useState([]);
-    const [chartLabels, setChartLabels] = useState(daysOfWeek);
+    const [chartLabels, setChartLabels] = useState(daysOfWeek.slice(0, 5));
     
 
     const fillChart = (data) => {
         if (data) {
-            const currentDay = new Date(data[0].dt_txt);
-            const chartLabels = [];
-        
-            for (let i = 0; i < 5; i++) {
-                const dayIndex = (currentDay.getDay() + i) % 7;
-                chartLabels.push(daysOfWeek[dayIndex]);
-            }
-
-            const dayTemperatureValues = [];
-            const nightTemperatureValues = [];
-
-            data.forEach(day => {
-                const currentDayTemperature = day.dt_txt.slice(11, 16);
-
-                if (currentDayTemperature === "15:00") {
-                    dayTemperatureValues.push(Math.round(day.main.temp));
-                } 
-                else if (currentDayTemperature === "00:00") {
-                    nightTemperatureValues.push(Math.round(day.main.temp));
-                }
-            });
+            const chartLabels = getCurrentWeek(data);
+            const {dayTemperatureValues, nightTemperatureValues} = getNightAndDayTemperatureValues(data);
 
             console.table(dayTemperatureValues);
             console.table(nightTemperatureValues);
-
 
             setChartTemperatureValues(dayTemperatureValues);
             setChartLabels(chartLabels);
