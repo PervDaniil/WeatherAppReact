@@ -24,7 +24,7 @@ export default function SearchBar({ setCityState }) {
             value={city}
             options={autocompleteOptions.cities}
             filterOptions={((options, state) => {
-                return options.filter(option => 
+                return options.filter(option =>
                     option.toLowerCase().includes(state.inputValue.toLowerCase())).slice(0, 7)
             })}
             renderInput={(parameters => (
@@ -47,7 +47,10 @@ export default function SearchBar({ setCityState }) {
                         }
                     }}
                     sx={{
-                        px: 2, pt: 2.5, '& .MuiOutlinedInput-root': { borderRadius: '42px', px: 2}
+                        px: 2, pt: 2.5,
+                        '& .MuiOutlinedInput-root': {
+                            borderRadius: '42px', px: 2,
+                        },
                     }} />
             ))}
         />

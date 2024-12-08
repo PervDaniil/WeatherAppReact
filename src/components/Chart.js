@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, Tooltip, Legend, LineElement, Title, CategoryScale, LinearScale, PointElement } from 'chart.js';
 ChartJS.register(Tooltip, Legend, LineElement, Title, CategoryScale, LinearScale, PointElement);
@@ -6,30 +6,46 @@ ChartJS.register(Tooltip, Legend, LineElement, Title, CategoryScale, LinearScale
 
 export default function Chart({ data }) {
     const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
-    const [chartTemperatureValues, setChartTemperatureValues] = useState(null);
+    const [chartTemperatureValues, setChartTemperatureValues] = useState([]);
     const [chartLabels, setChartLabels] = useState(daysOfWeek);
     
+
     const fillChart = (data) => {
         if (data) {
             const currentDay = new Date(data[0].dt_txt);
             const chartLabels = [];
-            const chartData = [];
         
             for (let i = 0; i < 5; i++) {
                 const dayIndex = (currentDay.getDay() + i) % 7;
                 chartLabels.push(daysOfWeek[dayIndex]);
-                chartData.push(data[i].main.temp);
             }
 
-            setChartTemperatureValues(chartData);
+            const dayTemperatureValues = [];
+            const nightTemperatureValues = [];
+
+            data.forEach(day => {
+                const currentDayTemperature = day.dt_txt.slice(11, 16);
+
+                if (currentDayTemperature === "15:00") {
+                    dayTemperatureValues.push(Math.round(day.main.temp));
+                } 
+                else if (currentDayTemperature === "00:00") {
+                    nightTemperatureValues.push(Math.round(day.main.temp));
+                }
+            });
+
+            console.table(dayTemperatureValues);
+            console.table(nightTemperatureValues);
+
+
+            setChartTemperatureValues(dayTemperatureValues);
             setChartLabels(chartLabels);
-            console.log(chartLabels);
         }
     }
 
-    useState(() => {
+    useEffect(() => {
         fillChart(data);
-    }, [data])
+    }, [data]);
 
 
     const chartData = {
@@ -37,7 +53,7 @@ export default function Chart({ data }) {
         datasets: [
             {
                 label: 'Temperature',
-                data: chartTemperatureValues || [-12, -7, -14, -11, -10],
+                data: chartTemperatureValues,
                 borderColor: 'rgb(50, 255, 0)',
                 backgroundColor: 'rgba(50, 255, 0, 0.25)',
                 tension: 0.4,

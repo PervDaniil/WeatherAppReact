@@ -21,13 +21,6 @@ export default function HomePage() {
 
 
     useEffect(() => {
-        if (forecastData) {
-            console.log(forecastData);
-        }
-    }, [forecastData]);
-
-
-    useEffect(() => {
         if (city) {
             HandleForecastFetching();
         }
@@ -40,7 +33,6 @@ export default function HomePage() {
                 try {
                     const data = await getWeatherForecast(city);
                     setForecastData(data.list);
-                    console.log(data.list);
         
                 } catch (error) {
                     setRequestFailed(true);
@@ -62,7 +54,8 @@ export default function HomePage() {
             <ResponsiveGridLayout>
                 <Box className="grid-first-section" sx={styles.GridFirstSection}>
                     <Stack direction="row" bgcolor="rgba(0, 0, 0, 0.15)" justifyContent="space-between">
-                        <Typography fontSize="7.5vw" component="div" fontWeight={500} ml={2.5}>{forecastData && 
+                        <Typography fontSize="7.5vw" component="div" fontWeight={500} ml={2.5}>
+                        {forecastData && 
                             Math.round(forecastData[0].main.temp)}C&deg;
                         </Typography>
                         <Box mr={7.5}>
