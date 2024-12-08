@@ -11,6 +11,7 @@ import WeatherStateIcon from "../utils/weatherIcons";
 import CardsSlider from "../components/CardsSlider";
 import SearchBar from "../components/SearchBar";
 import SnackBar from '../components/SnackBar';
+import SideBar from "../components/SideBar";
 import styles from '../styles/HomeStyles';
 import Chart from "../components/Chart";
 
@@ -19,6 +20,7 @@ export default function HomePage() {
     const [dataWasUpdated, setDataWasUpdated] = useState(false);
     const [requestFailed, setRequestFailed] = useState(false);
     const [forecastData, setForecastData] = useState(null);
+    const [sidebarOpen, setSidebarOpen] = useState(false);
     const [city, setCity] = useState('');
 
 
@@ -52,10 +54,15 @@ export default function HomePage() {
         FetchForecast();
     };
 
+    const HandleSideBarOpen = () => {
+        setSidebarOpen(!sidebarOpen);
+    }
+
 
     return (
         <ThemeContexProvider>
             <PreloaderBar />
+            <SideBar isOpen={sidebarOpen} toggleSidebar={HandleSideBarOpen}/>
 
             <ResponsiveGridLayout>
                 <Box className="grid-first-section" sx={styles.GridFirstSection}>
@@ -64,7 +71,7 @@ export default function HomePage() {
                             <AnimatedComponent>
                                 <Typography fontSize="7.5vw" component="div" fontWeight={500} ml={2.5}>
                                     {forecastData &&
-                                        Math.round(forecastData[0].main.temp)}C&deg;
+                                        Math.round(forecastData[0].main.temp)}&deg;
                                 </Typography>
                             </AnimatedComponent>
                             :
@@ -91,7 +98,7 @@ export default function HomePage() {
                 </Box>
             </ResponsiveGridLayout>
 
-            <ThemeModeFab />
+            <ThemeModeFab HandleSideBarOpen={HandleSideBarOpen}/>
             {requestFailed &&
                 <SnackBar severity="error" text="Request failed" />}
         </ThemeContexProvider>
