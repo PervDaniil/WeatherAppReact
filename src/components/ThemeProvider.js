@@ -2,7 +2,7 @@ import { createTheme } from '@mui/material';
 import { createContext, useState } from "react";
 import { ThemeProvider, CssBaseline } from "@mui/material";
 
-const ThemeContext = createContext();
+export const ThemeContext = createContext();
 
 export default function ThemeContexProvider({ children }) {
     const [themeMode, setThemeMode] = useState('dark');
@@ -23,7 +23,7 @@ export default function ThemeContexProvider({ children }) {
     }
 
     return (
-        <ThemeContext.Provider value={ HandleThemeChange }>
+        <ThemeContext.Provider value={{ HandleThemeChange, themeMode }}>
             <ThemeProvider theme={UserTheme}>
                 <CssBaseline />
                 { children }

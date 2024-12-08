@@ -1,5 +1,7 @@
 import { Drawer, Switch, Paper, Typography, TextField, InputAdornment, IconButton, Fab } from "@mui/material";
 import { List, ListItem, ListItemIcon, ListItemText, Divider } from "@mui/material";
+import { ThemeContext } from '../components/ThemeProvider';
+import { useContext } from "react";
 import {
     Search as SearchIcon,
     DarkMode as ThemeModeIcon,
@@ -13,6 +15,8 @@ import {
 
 
 export default function SideBar({ isOpen, toggleSidebar }) {
+    const { HandleThemeChange } = useContext(ThemeContext);
+
     const HandleSidebarOpen = () => {
         toggleSidebar();
     }
@@ -122,7 +126,7 @@ export default function SideBar({ isOpen, toggleSidebar }) {
                                 Enable dark mode
                             </Typography>
                         </ListItemText>
-                        <Switch checked />
+                        <Switch checked onClick={HandleThemeChange}/>
                     </ListItem>
                     <Divider />
                 </List>
